@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C420F7E31C97774D00EE92CD /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C420F7E11C97774D00EE92CD /* CustomCell.swift */; };
+		C420F7E41C97774D00EE92CD /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C420F7E21C97774D00EE92CD /* CustomCell.xib */; };
 		C4F609721C96F77200503ABA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F609711C96F77200503ABA /* AppDelegate.swift */; };
 		C4F609741C96F77200503ABA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F609731C96F77200503ABA /* ViewController.swift */; };
 		C4F609771C96F77200503ABA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4F609751C96F77200503ABA /* Main.storyboard */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C420F7E11C97774D00EE92CD /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		C420F7E21C97774D00EE92CD /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		C4F6096E1C96F77200503ABA /* idolrss.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = idolrss.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F609711C96F77200503ABA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4F609731C96F77200503ABA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +58,8 @@
 		C4F609701C96F77200503ABA /* idolrss */ = {
 			isa = PBXGroup;
 			children = (
+				C420F7E11C97774D00EE92CD /* CustomCell.swift */,
+				C420F7E21C97774D00EE92CD /* CustomCell.xib */,
 				C4F609711C96F77200503ABA /* AppDelegate.swift */,
 				C4F609731C96F77200503ABA /* ViewController.swift */,
 				C4F609751C96F77200503ABA /* Main.storyboard */,
@@ -125,6 +131,7 @@
 			files = (
 				C4F6097C1C96F77200503ABA /* LaunchScreen.storyboard in Resources */,
 				C4F609791C96F77200503ABA /* Assets.xcassets in Resources */,
+				C420F7E41C97774D00EE92CD /* CustomCell.xib in Resources */,
 				C4F609771C96F77200503ABA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4F609741C96F77200503ABA /* ViewController.swift in Sources */,
+				C420F7E31C97774D00EE92CD /* CustomCell.swift in Sources */,
 				C4F609721C96F77200503ABA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +293,7 @@
 				C4F609821C96F77200503ABA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
