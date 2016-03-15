@@ -71,11 +71,31 @@ func getContents(url: String, completion: ((AnyObject) -> Void)) {
     }
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CAPSPageMenuDelegate {
 
+    var pageMenu: CAPSPageMenu?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.title = "IDOL Reeder"
+        var controllerArray = [UIViewController]()
+        var feedArray: [Dictionary<String, String!>] =
+        [
+            [
+                "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/computer/rss.xml&num=10" ,
+                "title" : "コンピュータ"
+            ],
+            [
+                "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/world/rss.xml&num=10" ,
+                "title" : "海外"
+            ],
+            [
+                "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/local/rss.xml&num=10" ,
+                "title" : "地域"
+            ]
+        ]
     }
 
     override func didReceiveMemoryWarning() {
