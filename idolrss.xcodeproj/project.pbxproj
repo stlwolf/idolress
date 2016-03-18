@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3953F6896BB46E0B400A77EF /* Pods_idolrss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C5907DACA12FB386362765A /* Pods_idolrss.framework */; };
+		64535D3B1C9BC3DB0062BE35 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64535D3A1C9BC3DB0062BE35 /* DetailViewController.swift */; };
 		C420F7E31C97774D00EE92CD /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C420F7E11C97774D00EE92CD /* CustomCell.swift */; };
 		C420F7E41C97774D00EE92CD /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C420F7E21C97774D00EE92CD /* CustomCell.xib */; };
 		C4F609721C96F77200503ABA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F609711C96F77200503ABA /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		2C5907DACA12FB386362765A /* Pods_idolrss.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_idolrss.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		64535D3A1C9BC3DB0062BE35 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		BFFCDEA4272B61930611EFF6 /* Pods-idolrss.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-idolrss.release.xcconfig"; path = "Pods/Target Support Files/Pods-idolrss/Pods-idolrss.release.xcconfig"; sourceTree = "<group>"; };
 		C420F7E11C97774D00EE92CD /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		C420F7E21C97774D00EE92CD /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			children = (
 				C420F7E11C97774D00EE92CD /* CustomCell.swift */,
 				C420F7E21C97774D00EE92CD /* CustomCell.xib */,
+				64535D3A1C9BC3DB0062BE35 /* DetailViewController.swift */,
 				C4F609711C96F77200503ABA /* AppDelegate.swift */,
 				C4F609731C96F77200503ABA /* ViewController.swift */,
 				C4FA90071C9B67970009245A /* FeedTableViewController.swift */,
@@ -223,6 +226,7 @@
 			files = (
 				C4F609741C96F77200503ABA /* ViewController.swift in Sources */,
 				C4FA90081C9B67970009245A /* FeedTableViewController.swift in Sources */,
+				64535D3B1C9BC3DB0062BE35 /* DetailViewController.swift in Sources */,
 				C420F7E31C97774D00EE92CD /* CustomCell.swift in Sources */,
 				C4F609721C96F77200503ABA /* AppDelegate.swift in Sources */,
 			);

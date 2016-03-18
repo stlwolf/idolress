@@ -160,6 +160,14 @@ class FeedTableViewController: UITableViewController {
         return cell
     }
     
+    // Cellがタップされた時に呼ばれるdelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // 記事内容を詳細viewControllerに突っ込む
+        let detailViewController = DetailViewController()
+        detailViewController.entry = self.entries[indexPath.row].dictionary!
+        
+        // ナビゲーションコントローラに追加
+        parent.navigationController!.pushViewController(detailViewController, animated: true)
     }
 }
