@@ -38,6 +38,10 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
                 "title" : "地域"
             ]
         ]
+        
+        for feed in feedArray {
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {

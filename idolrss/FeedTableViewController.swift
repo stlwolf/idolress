@@ -6,6 +6,7 @@
 //  Copyright © 2016年 eddy. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import SwiftyJSON
 import Alamofire
