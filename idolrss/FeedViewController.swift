@@ -98,9 +98,6 @@ class FeedTableViewController: UITableViewController {
             self?.tableView.stopPullToRefresh()
         })
     }
-}
-
-extension FeedTableViewController : UITableViewDataSource {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.entries.count
@@ -137,26 +134,31 @@ extension FeedTableViewController : UITableViewDataSource {
             image = data["image"] as! String
             
             if (image != "") {
-                
+        
                 self.dispatch_async_global {
                     
                     let url = NSURL(string: image)
-                    var err: NSError?
                     
-                    // 一旦try-catchしない実装
-                    var imageData = try NSData(contentsOfURL: url!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                    // TODO:try-catchは後でちゃんと調べておく
+                    do {
+                        let imageData = try NSData(contentsOfURL: url!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
                     
-                    self.dispatch_async_main {
-                        cell.thumbImage.image = UIImage(data: imageData)!
-                        cell.layoutSubviews()
+                        self.dispatch_async_main {
+                            cell.thumbImage.image = UIImage(data: imageData)!
+                            cell.layoutSubviews()
+                        }
+                    } catch {
                     }
                 }
             }
             else {
-                cell.thumbImage.image = UIImage(named: "Picture")!
+                cell.thumbImage.image = UIImage(named: "noPhoto")!
             }
         })
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     }
 }
