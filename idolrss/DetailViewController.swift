@@ -28,8 +28,9 @@ class DetailViewController : TOWebViewController {
         
         let url = NSURL(string: self.entry["link"]!.string!)
         let request = NSURLRequest(URL: url!)
-        
-        SVProgressHUD.show()
+
+        // 真ん中のくるくる消す
+        SVProgressHUD.dismiss()
         
         self.webview.loadRequest(request)
     }
