@@ -56,12 +56,12 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
         }
         
         // PageMenu設定
-        let parameters: [String : AnyObject] = [
-            "menuItemSeparatorWidth": 4.3,
-            "useMenuLikeSegmentedControl": true,
-            "menuItemSeparatorPercentageHeight": 0.1,
-            "scrollMenuBackgroundColor": UIColor.grayColor(),
-            "selectionIndicatorColor": UIColor.blackColor(),
+        let parameters: [CAPSPageMenuOption] = [
+            .MenuItemSeparatorWidth(4.3),
+            .UseMenuLikeSegmentedControl(true),
+            .MenuItemSeparatorPercentageHeight(0.1),
+            .ScrollMenuBackgroundColor(UIColor.grayColor()),
+            .SelectionIndicatorColor(UIColor.blackColor()),
         ]
         
         let statusBarHeight: CGFloat = UIApplication.sharedApplication().statusBarFrame.height
@@ -69,7 +69,7 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
         let yPosition = naviHeight + statusBarHeight
         
         // 上部に作成するページメニューライブラリの作成
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, yPosition, self.view.frame.width, self.view.frame.height - yPosition), options: parameters)
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, yPosition, self.view.frame.width, self.view.frame.height - yPosition), pageMenuOptions: parameters)
         self.view.addSubview(pageMenu!.view)
     }
 
