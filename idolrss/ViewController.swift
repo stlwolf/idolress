@@ -26,17 +26,13 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
         let feedArray: [Dictionary<String, String!>] =
         [
             [
-                "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/computer/rss.xml&num=10" ,
-                "title" : "コンピュータ"
+                "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://blog.nogizaka46.com/atom.xml&num=10" ,
+                "title" : "ブログ"
             ],
             [
                 "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/world/rss.xml&num=10" ,
-                "title" : "海外"
+                "title" : "ニュース"
             ],
-            [
-                "link" : "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://rss.dailynews.yahoo.co.jp/fc/local/rss.xml&num=10" ,
-                "title" : "地域"
-            ]
         ]
         
         // 記事取得
