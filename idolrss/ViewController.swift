@@ -60,8 +60,7 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
             .MenuItemSeparatorWidth(4.3),
             .UseMenuLikeSegmentedControl(true),
             .MenuItemSeparatorPercentageHeight(0.1),
-            .ScrollMenuBackgroundColor(UIColor.grayColor()),
-            .SelectionIndicatorColor(UIColor.blackColor()),
+            .SelectionIndicatorColor(UIColor.blueColor()),
         ]
         
         let statusBarHeight: CGFloat = UIApplication.sharedApplication().statusBarFrame.height

@@ -49,7 +49,7 @@ func getContents(url: String, completion: ((AnyObject) -> Void)) {
         
         // HTMLを抽出
         let ogTags = html.nodesMatchingSelector("meta[property=\"og:description\"]")
-        if ogTags.isEmpty {
+        if !(ogTags.isEmpty) {
             for tag in ogTags {
                 content = (tag.attributes?["content"] as? String)!
             }
@@ -58,7 +58,7 @@ func getContents(url: String, completion: ((AnyObject) -> Void)) {
         // 画像を抽出
         var image = ""
         let imgTags = html.nodesMatchingSelector("img")
-        if imgTags.isEmpty {
+        if !(imgTags.isEmpty) {
             for tag in imgTags {
                 if let data = tag.attributes?["data-src"] {
                     image = data as! String
@@ -93,6 +93,7 @@ class FeedTableViewController: UITableViewController {
             SVProgressHUD.dismiss()
         })
         
+        // pullして更新のライブラリ
         self.tableView.addPullToRefresh({ [weak self] in
             
             self?.tableView.reloadData()
@@ -100,10 +101,12 @@ class FeedTableViewController: UITableViewController {
         })
     }
     
+    // セルの数返す(必須)
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.entries.count
     }
     
+    // セルの高さ返す(必須)
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 140
     }
@@ -116,6 +119,7 @@ class FeedTableViewController: UITableViewController {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
     }
     
+    // セルの中身返す(必須)
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: CustomCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CustomCell
@@ -124,6 +128,7 @@ class FeedTableViewController: UITableViewController {
         var image = ""
         
         // Cell初期化
+        cell.title.text = self.entries[indexPath.row]["title"].string
         cell.contents.text = ""
         cell.thumbImage.image = UIImage(named: "noPhoto")
         
