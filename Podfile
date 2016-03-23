@@ -11,4 +11,5 @@ target 'idolrss' do
     pod 'SVProgressHUD'
     pod 'TOWebViewController'
     pod 'PullToRefreshSwift'
+    pod 'Fuzi', '~> 0.3.0'
 end
