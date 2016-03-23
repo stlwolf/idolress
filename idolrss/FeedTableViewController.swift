@@ -13,6 +13,20 @@ import Alamofire
 import HTMLReader
 import SVProgressHUD
 import PullToRefreshSwift
+import Fuzi
+
+// test
+// リクエスト送信
+func xmlParse(completion: ((String) -> Void)) {
+    
+    Alamofire.request(.GET, "http://blog.nogizaka46.com/atom.xml").responseString { response in
+        guard let object = response.result.value else {
+            return
+        }
+        
+        completion(object)
+    }
+}
 
 // RSSのJSONをパースする
 func parse(url: String, completion: (([JSON]?) -> Void)) {
@@ -45,7 +59,7 @@ func getContents(url: String, completion: ((AnyObject) -> Void)) {
         }
         
         var content = ""
-        let html = HTMLDocument(string: object)
+        let html = HTMLReader.HTMLDocument(string: object)
         
         // HTMLを抽出
         let ogTags = html.nodesMatchingSelector("meta[property=\"og:description\"]")
@@ -76,6 +90,22 @@ class FeedTableViewController: UITableViewController {
     var link = ""
     var entries: [JSON] = []
     var parent: UIViewController = UIViewController()
+    var xml = ""
+
+    func loadXml(xml: String) {
+        if let document = try? XMLDocument(string: xml, encoding: NSUTF8StringEncoding) {
+            print(document.root?.tag)
+            
+            document.definePrefix("atom", defaultNamespace: "http://www.w3.org/2005/Atom")
+            
+            print(document.root?.firstChild(tag: "title", inNamespace: "atom"))
+            
+            for element in (document.root?.children)! {
+                print("\(element)")
+            }
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +114,13 @@ class FeedTableViewController: UITableViewController {
         // カスタムcellを設定
         let nib: UINib = UINib(nibName: "CustomCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "Cell")
+        
+        // test
+        xmlParse({ data in
+            self.loadXml(data)
+            self.tableView.reloadData()
+            SVProgressHUD.dismiss()
+        })
         
         // linkからRSS作って、JSONにparseする？
         parse(self.link, completion: { data in
