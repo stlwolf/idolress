@@ -126,9 +126,6 @@ class FeedTableViewController: UITableViewController {
         
         var contents = ""
         var image = ""
-        let profileImg: [String: String] = [
-            "生駒里奈": "http://img.nogizaka46.com/www/member/img/ikomarina_prof.jpg",
-        ]
         
         // Cell初期化
         cell.title.text = self.entries[indexPath.row]["author"].string
@@ -137,13 +134,12 @@ class FeedTableViewController: UITableViewController {
         
         getContents(self.entries[indexPath.row]["link"].string!, completion: { data in
             
-            //contents = data["content"] as! String
-            //cell.contents.text = contents
+            contents = data["content"] as! String
+            cell.contents.text = contents
             
-            //image = data["image"] as! String
+            image = data["image"] as! String
             
-            //if (image != "") {
-            if let image = profileImg[cell.title.text!] {
+            if (image != "") {
         
                 self.dispatch_async_global {
                     
