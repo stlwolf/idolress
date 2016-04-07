@@ -17,19 +17,19 @@ import Fuzi
 
 // test
 // リクエスト送信
-func xmlParse(completion: ((String) -> Void)) {
+func getHtml(url: String, completion: ((String) -> Void)) {
     
-    Alamofire.request(.GET, "http://blog.nogizaka46.com/atom.xml").responseString { response in
-        guard let object = response.result.value else {
+    Alamofire.request(.GET, url).responseString { response in
+        guard let html = response.result.value else {
             return
         }
         
-        completion(object)
+        completion(html)
     }
 }
 
 // RSSのJSONをパースする
-func parse(url: String, completion: (([JSON]?) -> Void)) {
+func parseJson(url: String, completion: (([JSON]?) -> Void)) {
     
     let url = NSURL(string: url)
     
@@ -88,23 +88,25 @@ func getContents(url: String, completion: ((AnyObject) -> Void)) {
 class FeedTableViewController: UITableViewController {
 
     var link = ""
+    var data = [Dictionary<String, String>]()
     var entries: [JSON] = []
-    var parent: UIViewController = UIViewController()
+    var parent: ViewController = ViewController()
     var xml = ""
+    
+    func loadHTML(html: String) {
+        
+        if let doc = try? Fuzi.HTMLDocument(string: html) {
+            
+            // 個々のブログデータ
+            for article in doc.xpath("//div[@class=\"box-main\"]/article") {
 
-    func loadXml(xml: String) {
-        if let document = try? XMLDocument(string: xml, encoding: NSUTF8StringEncoding) {
-            print(document.root?.tag)
-            
-            document.definePrefix("atom", defaultNamespace: "http://www.w3.org/2005/Atom")
-            
-            print(document.root?.firstChild(tag: "title", inNamespace: "atom"))
-            
-            for element in (document.root?.children)! {
-                print("\(element)")
+                let title = article.children[0].firstChild(xpath: "./div[2]/h3")!.stringValue
+                let entry = self.parent.topUrl + article.children[0].firstChild(xpath: "./div[2]/h3/a")!["href"]!
+                let name = article.children[0].firstChild(xpath: "./div[2]/p")!.stringValue
+                
+                self.data.append(["title": title.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet()), "name": name.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet()), "entry": entry])
             }
         }
-        
     }
     
     override func viewDidLoad() {
@@ -115,20 +117,20 @@ class FeedTableViewController: UITableViewController {
         let nib: UINib = UINib(nibName: "CustomCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "Cell")
         
-        // test
-        xmlParse({ data in
-            self.loadXml(data)
+        // ブログ見に行く
+        getHtml(self.link, completion: { data in
+            self.loadHTML(data)
             self.tableView.reloadData()
             SVProgressHUD.dismiss()
         })
         
         // linkからRSS作って、JSONにparseする？
-        parse(self.link, completion: { data in
-            
-            self.entries = data!
-            self.tableView.reloadData()
-            SVProgressHUD.dismiss()
-        })
+//        parseJson(self.link, completion: { data in
+//            
+//            self.entries = data!
+//            self.tableView.reloadData()
+//            SVProgressHUD.dismiss()
+//        })
         
         // pullして更新のライブラリ
         self.tableView.addPullToRefresh({ [weak self] in
@@ -140,7 +142,7 @@ class FeedTableViewController: UITableViewController {
     
     // セルの数返す(必須)
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.entries.count
+        return self.data.count
     }
     
     // セルの高さ返す(必須)
@@ -161,43 +163,43 @@ class FeedTableViewController: UITableViewController {
         
         let cell: CustomCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CustomCell
         
-        var contents = ""
-        var image = ""
-        
         // Cell初期化
-        cell.title.text = self.entries[indexPath.row]["author"].string
-        cell.contents.text = self.entries[indexPath.row]["contentSnippet"].string
+        cell.title.text = self.data[indexPath.row]["name"]
+        cell.contents.text = self.data[indexPath.row]["title"]
         cell.thumbImage.image = UIImage(named: "noPhoto")
         
-        getContents(self.entries[indexPath.row]["link"].string!, completion: { data in
-            
-            contents = data["content"] as! String
-            cell.contents.text = contents
-            
-            image = data["image"] as! String
-            
-            if (image != "") {
+        //var contents = ""
+        //var image = ""
         
-                self.dispatch_async_global {
-                    
-                    let url = NSURL(string: image)
-                    
-                    // TODO:try-catchは後でちゃんと調べておく
-                    do {
-                        let imageData = try NSData(contentsOfURL: url!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
-                    
-                        self.dispatch_async_main {
-                            cell.thumbImage.image = UIImage(data: imageData)!
-                            cell.layoutSubviews()
-                        }
-                    } catch {
-                    }
-                }
-            }
-            else {
-                cell.thumbImage.image = UIImage(named: "noPhoto")!
-            }
-        })
+//        getContents(self.entries[indexPath.row]["link"].string!, completion: { data in
+//            
+//            contents = data["content"] as! String
+//            cell.contents.text = contents
+//            
+//            image = data["image"] as! String
+//            
+//            if (image != "") {
+//        
+//                self.dispatch_async_global {
+//                    
+//                    let url = NSURL(string: image)
+//                    
+//                    // TODO:try-catchは後でちゃんと調べておく
+//                    do {
+//                        let imageData = try NSData(contentsOfURL: url!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+//                    
+//                        self.dispatch_async_main {
+//                            cell.thumbImage.image = UIImage(data: imageData)!
+//                            cell.layoutSubviews()
+//                        }
+//                    } catch {
+//                    }
+//                }
+//            }
+//            else {
+//                cell.thumbImage.image = UIImage(named: "noPhoto")!
+//            }
+//        })
         
         return cell
     }
@@ -207,7 +209,7 @@ class FeedTableViewController: UITableViewController {
         
         // 記事内容を詳細viewControllerに突っ込む
         let detailViewController = DetailViewController()
-        detailViewController.entry = self.entries[indexPath.row].dictionary!
+        detailViewController.entry = self.data[indexPath.row]["entry"]!
         
         // ナビゲーションコントローラに追加
         parent.navigationController!.pushViewController(detailViewController, animated: true)

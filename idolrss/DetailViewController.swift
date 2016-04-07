@@ -15,7 +15,7 @@ import SVProgressHUD
 class DetailViewController : TOWebViewController {
     
     let webview = UIWebView()
-    var entry = [String: JSON]()
+    var entry = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,7 @@ class DetailViewController : TOWebViewController {
         
         self.view.addSubview(self.webview)
         
-        let url = NSURL(string: self.entry["link"]!.string!)
+        let url = NSURL(string: self.entry)
         let request = NSURLRequest(URL: url!)
 
         // 真ん中のくるくる消す
