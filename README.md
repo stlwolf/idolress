@@ -1,2 +1,2 @@
-# idolress
+# idolrss
 rss-reader
