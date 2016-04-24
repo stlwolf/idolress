@@ -103,8 +103,30 @@ class FeedTableViewController: UITableViewController {
                 let title = article.children[0].firstChild(xpath: "./div[2]/h3")!.stringValue
                 let entry = self.parent.topUrl + article.children[0].firstChild(xpath: "./div[2]/h3/a")!["href"]!
                 let name = article.children[0].firstChild(xpath: "./div[2]/p")!.stringValue
+                var imageSrc = ""
+
+                // IMGタグの追い方がダメなので修正する！！
+                for main in article.children[0].xpath("../div[2]/div[1]") {
+                    for child in main.children {
+                        if let src = child.firstChild(xpath: "./img")?["src"] {
+                            imageSrc = self.parent.topUrl + src
+                            break
+                        }
+                    }
+                }
                 
-                self.data.append(["title": title.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet()), "name": name.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet()), "entry": entry])
+                if imageSrc == "" {
+                    for main in article.children[0].xpath("../div[2]/div[1]/div[2]") {
+                        for child in main.children {
+                            if let src = child.firstChild(xpath: "./img")?["src"] {
+                                imageSrc = self.parent.topUrl + src
+                                break
+                            }
+                        }
+                    }
+                }
+                
+                self.data.append(["title": title.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet()), "name": name.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet()), "entry": entry, "image": imageSrc])
             }
         }
     }
@@ -166,7 +188,27 @@ class FeedTableViewController: UITableViewController {
         // Cell初期化
         cell.title.text = self.data[indexPath.row]["name"]
         cell.contents.text = self.data[indexPath.row]["title"]
-        cell.thumbImage.image = UIImage(named: "noPhoto")
+        
+        if (self.data[indexPath.row]["image"] != "") {
+            self.dispatch_async_global {
+                
+                let url = NSURL(string: self.data[indexPath.row]["image"]!)
+                
+                // TODO:try-catchは後でちゃんと調べておく
+                do {
+                    let imageData = try NSData(contentsOfURL: url!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                    
+                    self.dispatch_async_main {
+                        cell.thumbImage.image = UIImage(data: imageData)!
+                        cell.layoutSubviews()
+                    }
+                    } catch {
+                    }
+            }
+        }
+        else {
+            cell.thumbImage.image = UIImage(named: "noPhoto")
+        }
         
         //var contents = ""
         //var image = ""
