@@ -88,7 +88,7 @@ func getContents(url: String, completion: ((AnyObject) -> Void)) {
 class FeedTableViewController: UITableViewController {
 
     var link = ""
-    var data = [Dictionary<String, String>]()
+    var data = [Dictionary<String, AnyObject>]()
     var entries: [JSON] = []
     var parent: ViewController = ViewController()
     var xml = ""
@@ -186,18 +186,21 @@ class FeedTableViewController: UITableViewController {
         let cell: CustomCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CustomCell
         
         // Cell初期化
-        cell.title.text = self.data[indexPath.row]["name"]
-        cell.contents.text = self.data[indexPath.row]["title"]
+        cell.title.text = self.data[indexPath.row]["name"] as? String
+        cell.contents.text = self.data[indexPath.row]["title"] as? String
+        let imagesSrc = self.data[indexPath.row]["image"] as? String
         
-        if (self.data[indexPath.row]["image"] != "") {
+        if (imagesSrc != "") {
+            
             self.dispatch_async_global {
                 
-                let url = NSURL(string: self.data[indexPath.row]["image"]!)
+                let url = NSURL(string: imagesSrc!)
                 
                 // TODO:try-catchは後でちゃんと調べておく
                 do {
                     let imageData = try NSData(contentsOfURL: url!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
-                    
+                    self.data[indexPath.row]["imageData"] = imageData
+        
                     self.dispatch_async_main {
                         cell.thumbImage.image = UIImage(data: imageData)!
                         cell.layoutSubviews()
@@ -251,7 +254,7 @@ class FeedTableViewController: UITableViewController {
         
         // 記事内容を詳細viewControllerに突っ込む
         let detailViewController = DetailViewController()
-        detailViewController.entry = self.data[indexPath.row]["entry"]!
+        detailViewController.entry = self.data[indexPath.row]["entry"] as! String
         
         // ナビゲーションコントローラに追加
         parent.navigationController!.pushViewController(detailViewController, animated: true)
