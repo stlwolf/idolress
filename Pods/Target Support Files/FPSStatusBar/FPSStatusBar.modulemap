@@ -1,0 +1,6 @@
+framework module FPSStatusBar {
+  umbrella header "FPSStatusBar-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FPSStatusBar
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var myNavigationController: UINavigationController?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        FPSStatusBar.start()
         
         // Override point for customization after application launch.
         myNavigationController = UINavigationController(rootViewController: ViewController())

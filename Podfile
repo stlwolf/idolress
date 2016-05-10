@@ -12,4 +12,5 @@ target 'idolrss' do
     pod 'TOWebViewController'
     pod 'PullToRefreshSwift'
     pod 'Fuzi', '~> 0.3.0'
+    pod 'FPSStatusBar'
 end

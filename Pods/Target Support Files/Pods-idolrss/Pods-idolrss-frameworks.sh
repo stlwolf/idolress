@@ -85,6 +85,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-idolrss/Alamofire.framework"
+  install_framework "Pods-idolrss/FPSStatusBar.framework"
   install_framework "Pods-idolrss/Fuzi.framework"
   install_framework "Pods-idolrss/HTMLReader.framework"
   install_framework "Pods-idolrss/PageMenu.framework"
@@ -95,6 +96,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-idolrss/Alamofire.framework"
+  install_framework "Pods-idolrss/FPSStatusBar.framework"
   install_framework "Pods-idolrss/Fuzi.framework"
   install_framework "Pods-idolrss/HTMLReader.framework"
   install_framework "Pods-idolrss/PageMenu.framework"
