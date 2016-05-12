@@ -47,55 +47,36 @@ func parseJson(url: String, completion: (([JSON]?) -> Void)) {
     }
 }
 
-// 指定URLのHTMLと画像を取得
-func getContents(url: String, completion: ((AnyObject) -> Void)) {
-    
-    let url = NSURL(string: url)
-    var result = [String: String!]()
-    
-    Alamofire.request(.GET, url!, parameters: nil).responseString { response in
-        guard let object = response.result.value else {
-            return
-        }
-        
-        var content = ""
-        let html = HTMLReader.HTMLDocument(string: object)
-        
-        // HTMLを抽出
-        let ogTags = html.nodesMatchingSelector("meta[property=\"og:description\"]")
-        if !(ogTags.isEmpty) {
-            for tag in ogTags {
-                content = (tag.attributes?["content"] as? String)!
-            }
-        }
-        
-        // 画像を抽出
-        var image = ""
-        let imgTags = html.nodesMatchingSelector("img")
-        if !(imgTags.isEmpty) {
-            for tag in imgTags {
-                if let data = tag.attributes?["data-src"] {
-                    image = data as! String
-                }
-            }
-        }
-        
-        result = ["content": content, "image": image]
-        completion(result)
-    }
-}
-
 class FeedTableViewController: UITableViewController {
 
     var link = ""
+    var nextlink = ""
     var data = [Dictionary<String, AnyObject>]()
     var entries: [JSON] = []
     var parent: ViewController = ViewController()
     var xml = ""
     
+    // スクロール検知
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        // テーブル最下部までいったかどうか？
+        if (self.tableView.contentOffset.y >= (self.tableView.contentSize.height - self.tableView.bounds.size.height))
+        {
+            // ブログ見に行く
+            getHtml(self.nextlink, completion: { data in
+                self.loadHTML(data)
+                self.tableView.reloadData()
+                SVProgressHUD.dismiss()
+            })
+        }
+    }
+    
     func loadHTML(html: String) {
         
         if let doc = try? Fuzi.HTMLDocument(string: html) {
+            
+            // pager
+            nextlink = parent.topUrl + doc.firstChild(xpath: "//div[@class=\"pager\"]/ul/li[2]/a")!["href"]!
             
             // 個々のブログデータ
             for article in doc.xpath("//div[@class=\"box-main\"]/article") {
@@ -146,14 +127,6 @@ class FeedTableViewController: UITableViewController {
             SVProgressHUD.dismiss()
         })
         
-        // linkからRSS作って、JSONにparseする？
-//        parseJson(self.link, completion: { data in
-//            
-//            self.entries = data!
-//            self.tableView.reloadData()
-//            SVProgressHUD.dismiss()
-//        })
-        
         // pullして更新のライブラリ
         self.tableView.addPullToRefresh({ [weak self] in
             
@@ -164,6 +137,7 @@ class FeedTableViewController: UITableViewController {
     
     // セルの数返す(必須)
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(self.data.count)
         return self.data.count
     }
     
@@ -258,5 +232,43 @@ class FeedTableViewController: UITableViewController {
         
         // ナビゲーションコントローラに追加
         parent.navigationController!.pushViewController(detailViewController, animated: true)
+    }
+}
+
+// 指定URLのHTMLと画像を取得
+func getContents(url: String, completion: ((AnyObject) -> Void)) {
+    
+    let url = NSURL(string: url)
+    var result = [String: String!]()
+    
+    Alamofire.request(.GET, url!, parameters: nil).responseString { response in
+        guard let object = response.result.value else {
+            return
+        }
+        
+        var content = ""
+        let html = HTMLReader.HTMLDocument(string: object)
+        
+        // HTMLを抽出
+        let ogTags = html.nodesMatchingSelector("meta[property=\"og:description\"]")
+        if !(ogTags.isEmpty) {
+            for tag in ogTags {
+                content = (tag.attributes?["content"] as? String)!
+            }
+        }
+        
+        // 画像を抽出
+        var image = ""
+        let imgTags = html.nodesMatchingSelector("img")
+        if !(imgTags.isEmpty) {
+            for tag in imgTags {
+                if let data = tag.attributes?["data-src"] {
+                    image = data as! String
+                }
+            }
+        }
+        
+        result = ["content": content, "image": image]
+        completion(result)
     }
 }
