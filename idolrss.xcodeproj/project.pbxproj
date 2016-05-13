@@ -11,6 +11,7 @@
 		64535D3B1C9BC3DB0062BE35 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64535D3A1C9BC3DB0062BE35 /* DetailViewController.swift */; };
 		C420F7E31C97774D00EE92CD /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C420F7E11C97774D00EE92CD /* CustomCell.swift */; };
 		C420F7E41C97774D00EE92CD /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C420F7E21C97774D00EE92CD /* CustomCell.xib */; };
+		C4610C9C1CE5EF0700D8C95F /* utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4610C9B1CE5EF0700D8C95F /* utility.swift */; };
 		C4F609721C96F77200503ABA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F609711C96F77200503ABA /* AppDelegate.swift */; };
 		C4F609741C96F77200503ABA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F609731C96F77200503ABA /* ViewController.swift */; };
 		C4F609771C96F77200503ABA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4F609751C96F77200503ABA /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		BFFCDEA4272B61930611EFF6 /* Pods-idolrss.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-idolrss.release.xcconfig"; path = "Pods/Target Support Files/Pods-idolrss/Pods-idolrss.release.xcconfig"; sourceTree = "<group>"; };
 		C420F7E11C97774D00EE92CD /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		C420F7E21C97774D00EE92CD /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		C4610C9B1CE5EF0700D8C95F /* utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = utility.swift; sourceTree = "<group>"; };
 		C4E6A8EF230446BE12909380 /* Pods-idolrss.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-idolrss.debug.xcconfig"; path = "Pods/Target Support Files/Pods-idolrss/Pods-idolrss.debug.xcconfig"; sourceTree = "<group>"; };
 		C4F6096E1C96F77200503ABA /* idolrss.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = idolrss.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F609711C96F77200503ABA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				C4F609781C96F77200503ABA /* Assets.xcassets */,
 				C4F6097A1C96F77200503ABA /* LaunchScreen.storyboard */,
 				C4F6097D1C96F77200503ABA /* Info.plist */,
+				C4610C9B1CE5EF0700D8C95F /* utility.swift */,
 			);
 			path = idolrss;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4610C9C1CE5EF0700D8C95F /* utility.swift in Sources */,
 				C4F609741C96F77200503ABA /* ViewController.swift in Sources */,
 				C4FA90081C9B67970009245A /* FeedTableViewController.swift in Sources */,
 				64535D3B1C9BC3DB0062BE35 /* DetailViewController.swift in Sources */,

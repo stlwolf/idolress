@@ -137,7 +137,6 @@ class FeedTableViewController: UITableViewController {
     
     // セルの数返す(必須)
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(self.data.count)
         return self.data.count
     }
     
