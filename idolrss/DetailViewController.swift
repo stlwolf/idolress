@@ -8,13 +8,13 @@
 
 import Foundation
 import UIKit
-import TOWebViewController
 import SwiftyJSON
 import SVProgressHUD
+import WebKit
 
-class DetailViewController : TOWebViewController {
+class DetailViewController : UIViewController, WKNavigationDelegate {
     
-    let webview = UIWebView()
+    let webview = WKWebView()
     var entry = ""
     
     override func viewDidLoad() {
@@ -22,7 +22,8 @@ class DetailViewController : TOWebViewController {
         
         // webViewの基本設定
         self.webview.frame = self.view.bounds
-        self.webview.delegate = self
+        self.webview.navigationDelegate = self
+        self.webview.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(self.webview)
         
@@ -35,14 +36,11 @@ class DetailViewController : TOWebViewController {
         self.webview.loadRequest(request)
     }
     
-    override func webViewDidStartLoad(webView: UIWebView) {
-        // ネットワークアクセス中にiphone上部に出るぐるぐるを動かす設定をON
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true // インジゲーターON
     }
     
-    override func webViewDidFinishLoad(webView: UIWebView) {
-        // 上記ぐるぐるをOFF
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false // インジゲーターOFF
     }
-
 }
