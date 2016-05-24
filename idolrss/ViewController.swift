@@ -94,4 +94,3 @@ class ViewController: UIViewController, CAPSPageMenuDelegate {
         // Dispose of any resources that can be recreated.
     }
 }
-
